@@ -1,4 +1,5 @@
 export type FundingRate = {
+  exchange: string;
   symbol: string;
   fundingTime: number;
   fundingRate: string;

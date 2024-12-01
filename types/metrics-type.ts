@@ -1,11 +1,15 @@
-import { FearAndGreed } from "@/types/fear-and-greed";
+import { FearAndGreed } from '@/types/fear-and-greed';
+import { FundingRate } from '@/types/funding-rate-type';
 
 export type Metrics = {
   fearAndGreed: FearAndGreed;
   btcDominance: Dominance;
   ethDominance: Dominance;
   stableCoinMarketCap: StableCoinMarketCap;
-  defiData: DefiData;
+  defiData: DefiMarketCap;
+  totalMarketCap: TotalMarketCap;
+  altcoinData: AltcoinData;
+  fundingRates: FundingRate[];
 };
 
 export type Dominance = {
@@ -21,15 +25,31 @@ export type StableCoinMarketCap = {
   change: string;
 };
 
-export type DefiData = {
-  marketCap: string;
+export type DefiMarketCap = {
+  name: string;
+  value: string;
   volume: string;
   change: string;
+};
+
+export type TotalMarketCap = {
+  name: string;
+  value: string;
+  volume: string;
+  change: string;
+};
+
+export type AltcoinData = {
+  name: string;
+  value: string;
+  volume: string;
 };
 
 export type MarketData = {
   btcDominance: Dominance;
   ethDominance: Dominance;
   stableCoinMarketCap: StableCoinMarketCap;
-  defiData: DefiData;
+  defiData: DefiMarketCap;
+  totalMarketCap: TotalMarketCap;
+  altcoinData: AltcoinData;
 };

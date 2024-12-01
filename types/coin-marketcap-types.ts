@@ -9,10 +9,27 @@ export type MarketCapStatus = {
 
 export type Quote = {
   USD: {
-    market_cap: number;
-    volume_24h: number;
-    percent_change_24h: number;
-    // Add other USD related fields here if needed
+    total_market_cap: number;
+    total_volume_24h: number;
+    altcoin_volume_24h: number;
+    altcoin_market_cap: number;
+    altcoin_volume_24h_reported: number;
+    defi_volume_24h: number;
+    defi_volume_24h_reported: number;
+    defi_24h_percentage_change: number;
+    defi_market_cap: number;
+    stablecoin_volume_24h: number;
+    stablecoin_volume_24h_reported: number;
+    stablecoin_24h_percentage_change: number;
+    stablecoin_market_cap: number;
+    derivatives_volume_24h: number;
+    derivatives_volume_24h_reported: number;
+    derivatives_24h_percentage_change: number;
+    total_market_cap_yesterday: number;
+    total_volume_24h_yesterday: number;
+    total_market_cap_yesterday_percentage_change: number;
+    total_volume_24h_yesterday_percentage_change: number;
+    last_updated: string;
   };
 };
 

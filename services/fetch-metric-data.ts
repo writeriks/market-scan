@@ -10,9 +10,9 @@ import { MarketData, Metrics } from '@/types/metrics-type';
 const getBinanceLastTwoFundingRatesForSymbol = async (symbol: string): Promise<FundingRate> => {
   const url = `https://fapi.binance.com/fapi/v1/fundingRate?symbol=${symbol.toUpperCase()}USDT&limit=2`;
   const fundingRates: BinanceFundingRate[] = await fetchFundingRates(url);
-  console.log('🚀 ~ getBinanceLastTwoFundingRatesForSymbol ~ fundingRates:', fundingRates);
 
   return {
+    exchange: 'Binance',
     symbol: fundingRates[1].symbol,
     fundingTime: fundingRates[1].fundingTime,
     fundingRate: fundingRates[1].fundingRate,
@@ -49,27 +49,49 @@ const getMarketData = async (): Promise<MarketData> => {
   };
 
   const defiData = {
-    marketCap: marketData.defi_market_cap.toFixed(2),
+    name: 'Defi Market Cap',
+    value: marketData.defi_market_cap.toFixed(2),
     volume: marketData.defi_volume_24h.toFixed(2),
     change: marketData.defi_24h_percentage_change.toFixed(2),
   };
 
-  const btcBinanceFundingRates = await getBinanceLastTwoFundingRatesForSymbol('btc');
-  const ethBinanceFundingRates = await getBinanceLastTwoFundingRatesForSymbol('eth');
-  console.log('🚀 ~ getMarketData ~ btcFundingRates:', btcBinanceFundingRates);
-  console.log('🚀 ~ getMarketData ~ ethBinanceFundingRates:', ethBinanceFundingRates);
+  const totalMarketCap = {
+    name: 'Total Market Cap',
+    value: marketData.quote.USD.total_market_cap.toFixed(2),
+    volume: marketData.quote.USD.total_volume_24h.toFixed(2),
+    change: (
+      (marketData.quote.USD.total_market_cap * 100) /
+        marketData.quote.USD.total_market_cap_yesterday -
+      100
+    ).toFixed(2),
+  };
+  const altcoinData = {
+    name: 'Altcoin Market Cap',
+    value: marketData.quote.USD.altcoin_market_cap.toFixed(2),
+    volume: marketData.quote.USD.altcoin_volume_24h.toFixed(2),
+  };
 
   return {
     btcDominance,
     ethDominance,
     stableCoinMarketCap,
     defiData,
+    totalMarketCap,
+    altcoinData,
   };
+};
+
+export const getFundingRates = async (): Promise<FundingRate[]> => {
+  const btcBinanceFundingRates = await getBinanceLastTwoFundingRatesForSymbol('btc');
+  const ethBinanceFundingRates = await getBinanceLastTwoFundingRatesForSymbol('eth');
+
+  return [btcBinanceFundingRates, ethBinanceFundingRates];
 };
 
 export const getMetrics = async (): Promise<Metrics> => {
   const fearAndGreed = await getFearAndGreedIndex();
   const marketData = await getMarketData();
+  const fundingRates = await getFundingRates();
 
-  return { fearAndGreed, ...marketData };
+  return { fearAndGreed, ...marketData, fundingRates };
 };
