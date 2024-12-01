@@ -108,7 +108,7 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
               onClick={() => handleOptionClick(option)}
               onMouseEnter={() => setHighlightedIndex(index)}
               className={`cursor-pointer px-3 py-2 text-sm ${
-                index === highlightedIndex ? 'bg-gray-600' : 'hover:bg-gray-100'
+                index === highlightedIndex ? 'bg-secondary/80' : 'hover:bg-secondary/80'
               }`}
               role='option'
               aria-selected={index === highlightedIndex}
