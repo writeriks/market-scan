@@ -3,15 +3,19 @@ import { CoinMarketCapitalData } from '@/types/coin-marketcap-types';
 import { FearAndGreed } from '@/types/fear-and-greed';
 
 export const fetchUrl = async (url: string, payload?: {}): Promise<Response> => {
-  const response = await fetch(url, {
-    ...payload,
-  });
+  try {
+    const response = await fetch(url, {
+      ...payload,
+    });
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch metrics');
+    if (!response.ok) {
+      throw new Error('Failed to fetch metrics');
+    }
+
+    return response;
+  } catch (error: any) {
+    throw new Error('Failed to fetch metrics', error);
   }
-
-  return response;
 };
 
 export const getAssetPrice = async (ticker: string): Promise<AssetPrice> => {

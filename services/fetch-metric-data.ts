@@ -3,7 +3,7 @@ import {
   fetchMarketData,
   getAssetPrice,
   getFearAndGreedIndex,
-} from '@/services/api/api-service';
+} from '@/services/api-service/api-service';
 import { BinanceFundingRate, FundingRate } from '@/types/funding-rate-type';
 import { MarketData, Metrics } from '@/types/metrics-type';
 
