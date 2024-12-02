@@ -8,9 +8,9 @@ export const fetchUrl = async (url: string, payload?: {}): Promise<Response> => 
       ...payload,
     });
 
-    if (!response.ok) {
+    /*    if (!response.ok) {
       throw new Error('Failed to fetch metrics');
-    }
+    } */
 
     return response;
   } catch (error: any) {
