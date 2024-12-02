@@ -7,7 +7,9 @@ import {
 import { BinanceFundingRate, FundingRate } from '@/types/funding-rate-type';
 import { MarketData, Metrics } from '@/types/metrics-type';
 
-const getBinanceLastTwoFundingRatesForSymbol = async (symbol: string): Promise<FundingRate> => {
+export const getBinanceLastTwoFundingRatesForSymbol = async (
+  symbol: string
+): Promise<FundingRate> => {
   const url = `https://fapi.binance.com/fapi/v1/fundingRate?symbol=${symbol.toUpperCase()}USDT&limit=2`;
   const fundingRates: BinanceFundingRate[] = await fetchFundingRates(url);
 

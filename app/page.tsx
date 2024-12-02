@@ -10,8 +10,6 @@ const Home: React.FC = async () => {
     throw new Error(`anan`);
   }
 
-  const { fundingRates } = metrics;
-
   return (
     <main className='container mx-auto sm:p-4 py-2 space-y-6'>
       <Metrics metrics={metrics} />
@@ -19,11 +17,9 @@ const Home: React.FC = async () => {
         <div className='lg:w-1/2 p-4'>
           <TickerAnalyzer />
         </div>
-        {fundingRates && (
-          <div className='lg:w-1/2 p-4'>
-            <FundingRates fundingRates={fundingRates} />
-          </div>
-        )}
+        <div className='lg:w-1/2 p-4'>
+          <FundingRates />
+        </div>
       </div>
     </main>
   );

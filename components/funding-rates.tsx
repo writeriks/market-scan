@@ -9,14 +9,18 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { FundingRate } from '@/types/funding-rate-type';
+import { getFundingRates } from '@/services/fetch-metric-data';
+import { useQuery } from '@tanstack/react-query';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 
-interface FundingRatesProps {
-  fundingRates: FundingRate[];
-}
+const FundingRates: React.FC = () => {
+  const { data } = useQuery({
+    queryKey: ['get-funding-rates'],
+    queryFn: () => getFundingRates(),
+  });
 
-const FundingRates: React.FC<FundingRatesProps> = ({ fundingRates }) => {
+  if (!data) return null;
+
   return (
     <Card className='p-6'>
       <div className='flex flex-col space-y-4'>
@@ -32,7 +36,7 @@ const FundingRates: React.FC<FundingRatesProps> = ({ fundingRates }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {fundingRates.map(fundingRate => (
+            {data.map(fundingRate => (
               <TableRow key={fundingRate.symbol}>
                 <TableCell className='font-medium'>
                   <span className='text-sm text-muted-foreground ml-2'>{fundingRate.exchange}</span>
