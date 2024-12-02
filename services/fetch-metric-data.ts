@@ -88,10 +88,14 @@ export const getFundingRates = async (): Promise<FundingRate[]> => {
   return [btcBinanceFundingRates, ethBinanceFundingRates];
 };
 
-export const getMetrics = async (): Promise<Metrics> => {
-  const fearAndGreed = await getFearAndGreedIndex();
-  const marketData = await getMarketData();
-  const fundingRates = await getFundingRates();
+export const getMetrics = async (): Promise<Metrics | undefined> => {
+  try {
+    const fearAndGreed = await getFearAndGreedIndex();
+    const marketData = await getMarketData();
+    const fundingRates = await getFundingRates();
 
-  return { fearAndGreed, ...marketData, fundingRates };
+    return { fearAndGreed, ...marketData, fundingRates };
+  } catch (e) {
+    console.error(e);
+  }
 };

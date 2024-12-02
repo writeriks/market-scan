@@ -5,6 +5,11 @@ import TickerAnalyzer from '@/components/ticker-analyzer/ticker-analyzer';
 
 const Home: React.FC = async () => {
   const metrics = await getMetrics();
+
+  if (!metrics) {
+    throw new Error(`Failed to fetch metrics`);
+  }
+
   const { fundingRates } = metrics;
 
   return (
