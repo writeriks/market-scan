@@ -9,7 +9,7 @@ export type Metrics = {
   defiData: DefiMarketCap;
   totalMarketCap: TotalMarketCap;
   altcoinData: AltcoinData;
-  fundingRates: FundingRate[];
+  fundingRates?: FundingRate[];
 };
 
 export type Dominance = {

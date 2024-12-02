@@ -19,9 +19,11 @@ const Home: React.FC = async () => {
         <div className='lg:w-1/2 p-4'>
           <TickerAnalyzer />
         </div>
-        <div className='lg:w-1/2 p-4'>
-          <FundingRates fundingRates={fundingRates} />
-        </div>
+        {fundingRates && (
+          <div className='lg:w-1/2 p-4'>
+            <FundingRates fundingRates={fundingRates} />
+          </div>
+        )}
       </div>
     </main>
   );

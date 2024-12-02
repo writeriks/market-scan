@@ -10,7 +10,6 @@ import { MarketData, Metrics } from '@/types/metrics-type';
 const getBinanceLastTwoFundingRatesForSymbol = async (symbol: string): Promise<FundingRate> => {
   const url = `https://fapi.binance.com/fapi/v1/fundingRate?symbol=${symbol.toUpperCase()}USDT&limit=2`;
   const fundingRates: BinanceFundingRate[] = await fetchFundingRates(url);
-  console.log('🚀 ~ getBinanceLastTwoFundingRatesForSymbol ~ fundingRates:', fundingRates);
 
   return {
     exchange: 'Binance',
@@ -92,15 +91,11 @@ export const getFundingRates = async (): Promise<FundingRate[]> => {
 export const getMetrics = async (): Promise<Metrics | undefined> => {
   try {
     const fearAndGreed = await getFearAndGreedIndex();
-    console.log('🚀 ~ getMetrics ~ fearAndGreed:', fearAndGreed);
     const marketData = await getMarketData();
-    console.log('🚀 ~ getMetrics ~ marketData:', marketData);
-    const fundingRates = await getFundingRates();
-    console.log('🚀 ~ getMetrics ~ fundingRates:', fundingRates);
+    /* const fundingRates = await getFundingRates(); */
 
-    return { fearAndGreed, ...marketData, fundingRates };
+    return { fearAndGreed, ...marketData };
   } catch (e) {
-    console.error('FAILLLLLLLL');
     console.error(e);
   }
 };
