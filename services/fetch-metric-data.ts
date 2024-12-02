@@ -91,11 +91,15 @@ export const getFundingRates = async (): Promise<FundingRate[]> => {
 export const getMetrics = async (): Promise<Metrics | undefined> => {
   try {
     const fearAndGreed = await getFearAndGreedIndex();
+    console.log('🚀 ~ getMetrics ~ fearAndGreed:', fearAndGreed);
     const marketData = await getMarketData();
+    console.log('🚀 ~ getMetrics ~ marketData:', marketData);
     const fundingRates = await getFundingRates();
+    console.log('🚀 ~ getMetrics ~ fundingRates:', fundingRates);
 
     return { fearAndGreed, ...marketData, fundingRates };
   } catch (e) {
+    console.error('FAILLLLLLLL');
     console.error(e);
   }
 };
