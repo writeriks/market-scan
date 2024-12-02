@@ -7,7 +7,7 @@ const Home: React.FC = async () => {
   const metrics = await getMetrics();
 
   if (!metrics) {
-    throw new Error(`Failed to fetch metrics`);
+    throw new Error(`anan`);
   }
 
   const { fundingRates } = metrics;
