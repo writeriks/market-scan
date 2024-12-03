@@ -6,7 +6,7 @@ import AutocompleteInput, {
   AutoCompleteInputOption,
 } from '@/components/auto-complete-input/auto-complete-input';
 
-const TickerAnalyzer: React.FC = () => {
+const SearchTicker: React.FC = () => {
   const frameworks: AutoCompleteInputOption[] = [
     { value: 'Next.js', label: 'Next.js' },
     { value: 'Nveltekit', label: 'SvelteKit' },
@@ -19,12 +19,11 @@ const TickerAnalyzer: React.FC = () => {
 
   return (
     <div>
-      TickerAnalyzer
       <AutocompleteInput
         options={frameworks}
         value={selectedFramework}
         onChange={setSelectedFramework}
-        placeholder='Start typing a framework name...'
+        placeholder='Type to search ticker...'
       />
       {selectedFramework && (
         <p className='mt-4'>
@@ -35,4 +34,4 @@ const TickerAnalyzer: React.FC = () => {
   );
 };
 
-export default TickerAnalyzer;
+export default SearchTicker;
