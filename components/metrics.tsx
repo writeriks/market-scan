@@ -93,7 +93,7 @@ const Metrics: React.FC<MetricsProps> = ({ metrics }) => {
   return (
     <div className='lg:p-4'>
       <div className='flex flex-col items-center md:items-start justify-center '>
-        <div className='grid grid-cols-2 md:grid-cols-5 gap-4'>
+        <div className='grid grid-cols-2 xl:grid-cols-8 md:grid-cols-5 gap-4'>
           {metricsComponents.map(metric => (
             <Card key={metric.name} className='p-4 w-40 md:w-36 lg:w-full'>
               <div className='flex items-start justify-between'>
