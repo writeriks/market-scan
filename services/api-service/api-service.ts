@@ -4,13 +4,11 @@ import { FearAndGreed } from '@/types/fear-and-greed';
 
 export const fetchUrl = async (url: string, headers?: {}, payload?: {}): Promise<Response> => {
   try {
-    const options: RequestInit = {
-      headers,
-      body: JSON.stringify(payload),
+    const response = await fetch(url, {
+      headers: headers,
       next: { revalidate: 60 },
-    };
-
-    const response = await fetch(url, options);
+      body: JSON.stringify(payload),
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
