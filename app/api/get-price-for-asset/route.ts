@@ -1,3 +1,4 @@
+import { fetchUrl } from '@/services/api-service/fetch-proxy';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest): Promise<any> {
@@ -5,7 +6,7 @@ export async function GET(request: NextRequest): Promise<any> {
     const { searchParams } = new URL(request.url);
     const symbol = searchParams.get('symbol') ?? '';
 
-    const response = await fetch(`https://api.mexc.com/api/v3/ticker/24hr?symbol=${symbol}USDT`);
+    const response = await fetchUrl(`https://api.mexc.com/api/v3/ticker/24hr?symbol=${symbol}USDT`);
     const data = await response.json();
 
     return NextResponse.json(data);

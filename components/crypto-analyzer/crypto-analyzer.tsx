@@ -7,18 +7,15 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchAllAssetsPrices, fetchPriceForAsset } from '@/services/api-service/api-service';
 
 const CryptoAnalyzer: React.FC = () => {
-  const { data } = useQuery({
+  const { data: allAssets } = useQuery({
     queryKey: ['fetch-all-assets'],
     queryFn: () => fetchAllAssetsPrices(),
   });
-
-  console.log('🚀 ~ data:', data);
 
   const { data: assetPrice } = useQuery({
     queryKey: [`get-price-for-BTC`],
     queryFn: () => fetchPriceForAsset('BTC'),
   });
-  console.log('🚀 ~ assetPrice:', assetPrice);
 
   return (
     <div className='w-full flex-col'>
