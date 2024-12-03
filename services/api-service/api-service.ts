@@ -31,6 +31,16 @@ export const getFearAndGreedIndex = async (): Promise<FearAndGreed> => {
   return data.data[0];
 };
 
+export const fetchAllAssetsPrices = async (): Promise<any[]> => {
+  const response = await fetchUrl('/api/get-all-assets');
+  return response.json();
+};
+
+export const fetchPriceForAsset = async (symbol: string): Promise<any[]> => {
+  const response = await fetchUrl(`/api/get-price-for-asset?symbol=${symbol.toUpperCase()}`);
+  return response.json();
+};
+
 export const fetchMarketData = async (): Promise<CoinMarketCapitalData> => {
   const headers = { 'X-CMC_PRO_API_KEY': `${process.env.NEXT_PUBLIC_COINMARKETCAP_API_KEY}` };
 
