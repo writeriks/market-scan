@@ -10,10 +10,6 @@ export const fetchUrl = async (url: string, headers?: {}, payload?: {}): Promise
       body: JSON.stringify(payload),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
     return response;
   } catch (error: any) {
     throw new Error('Failed to fetch metrics', error);
