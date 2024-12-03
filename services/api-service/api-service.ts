@@ -5,7 +5,6 @@ import { FearAndGreed } from '@/types/fear-and-greed';
 export const fetchUrl = async (url: string, headers?: {}, payload?: {}): Promise<Response> => {
   try {
     const options: RequestInit = {
-      method: payload ? 'POST' : 'GET',
       headers,
       body: payload ? JSON.stringify(payload) : undefined,
       next: { revalidate: 60 },
