@@ -6,7 +6,8 @@ export const fetchUrl = async (url: string, headers?: {}, payload?: {}): Promise
   try {
     const options: RequestInit = {
       headers,
-      body: payload ? JSON.stringify(payload) : undefined,
+      body: JSON.stringify(payload),
+      next: { revalidate: 60 },
     };
 
     const response = await fetch(url, options);
