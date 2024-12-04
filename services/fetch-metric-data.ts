@@ -1,33 +1,8 @@
-import {
-  fetchFundingRates,
-  fetchMarketData,
-  getAssetPrice,
-  getFearAndGreedIndex,
-} from '@/services/api-service/api-service';
-import { BinanceFundingRate, FundingRate } from '@/types/funding-rate-type';
+import { fetchCoinbaseMarketData, getAssetPrice } from '@/services/api-service/api-service';
 import { MarketData, Metrics } from '@/types/metrics-type';
 
-export const getBinanceLastTwoFundingRatesForSymbol = async (
-  symbol: string
-): Promise<FundingRate> => {
-  const url = `https://fapi.binance.com/fapi/v1/fundingRate?symbol=${symbol.toUpperCase()}USDT&limit=2`;
-  const fundingRates: BinanceFundingRate[] = await fetchFundingRates(url);
-
-  return {
-    exchange: 'Binance',
-    symbol: fundingRates[1].symbol,
-    fundingTime: fundingRates[1].fundingTime,
-    fundingRate: fundingRates[1].fundingRate,
-    percentageChange: (
-      ((Number(fundingRates[1].fundingRate) - Number(fundingRates[0].fundingRate)) /
-        Number(fundingRates[0].fundingRate)) *
-      100
-    ).toFixed(2),
-  };
-};
-
-const getMarketData = async (): Promise<MarketData> => {
-  const marketData = await fetchMarketData();
+export const getMarketData = async (): Promise<MarketData> => {
+  const marketData = await fetchCoinbaseMarketData();
 
   const btcPrice = await getAssetPrice('btc');
   const ethPrice = await getAssetPrice('eth');
@@ -81,23 +56,4 @@ const getMarketData = async (): Promise<MarketData> => {
     totalMarketCap,
     altcoinData,
   };
-};
-
-export const getFundingRates = async (): Promise<FundingRate[]> => {
-  const btcBinanceFundingRates = await getBinanceLastTwoFundingRatesForSymbol('btc');
-  const ethBinanceFundingRates = await getBinanceLastTwoFundingRatesForSymbol('eth');
-
-  return [btcBinanceFundingRates, ethBinanceFundingRates];
-};
-
-export const getMetrics = async (): Promise<Metrics | undefined> => {
-  try {
-    const fearAndGreed = await getFearAndGreedIndex();
-    const marketData = await getMarketData();
-    /* const fundingRates = await getFundingRates(); */
-
-    return { fearAndGreed, ...marketData };
-  } catch (e) {
-    console.error(e);
-  }
 };
