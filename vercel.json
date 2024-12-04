@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/get-metrics": {
+      "regions": ["iad1"]
+    }
+  }
+}
