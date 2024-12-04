@@ -30,6 +30,10 @@ export async function GET(request: NextRequest): Promise<any> {
 
     return NextResponse.json(response);
   } catch (error: any) {
-    return NextResponse.error();
+    return NextResponse.json({
+      status: 400,
+      statusText: JSON.stringify(error),
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    });
   }
 }
