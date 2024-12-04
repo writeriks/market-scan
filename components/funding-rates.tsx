@@ -21,6 +21,7 @@ const FundingRates: React.FC = () => {
     queryKey: ['get-funding-rates'],
     queryFn: () => getFundingRateForAsset(symbol || 'BTC'),
   });
+  console.log('🚀 ~ data:', data);
 
   return (
     <Card className='p-6'>
