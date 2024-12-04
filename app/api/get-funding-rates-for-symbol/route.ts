@@ -1,10 +1,5 @@
-import { fetchFundingRates, fetchUrl } from '@/services/api-service/api-service';
-import {
-  BinanceFundingRate,
-  BybitFundingRate,
-  BybitFundingRateResponse,
-  FundingRate,
-} from '@/types/funding-rate-type';
+import { fetchUrl } from '@/services/api-service/api-service';
+import { BybitFundingRate, BybitFundingRateResponse, FundingRate } from '@/types/funding-rate-type';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest): Promise<any> {
@@ -42,6 +37,7 @@ export async function GET(request: NextRequest): Promise<any> {
         100
       ).toFixed(2),
     };
+    console.log('🚀 ~ GET ~ fundingRate:', fundingRate);
 
     return NextResponse.json(fundingRate);
   } catch (error: any) {
