@@ -92,7 +92,7 @@ export const fetchPriceForAsset = async (symbol: string): Promise<any[]> => {
  * Fetches global market data from CoinMarketCap.
  * @returns A Promise resolving to the market data.
  */
-export const fetchMarketData = async (): Promise<CoinMarketCapitalData> => {
+export const fetchCoinbaseMarketData = async (): Promise<CoinMarketCapitalData> => {
   const url = 'https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest';
   const headers = {
     'X-CMC_PRO_API_KEY': process.env.NEXT_PUBLIC_COINMARKETCAP_API_KEY || '',
@@ -112,7 +112,12 @@ export const fetchFundingRates = async (url: string): Promise<any[]> => {
   return response.json();
 };
 
+/**
+ * Fetches the funding rate for a specific asset.
+ * @param symbol - The asset's symbol.
+ * @returns A Promise resolving to the asset's funding rate.
+ */
 export const getFundingRateForAsset = async (symbol: string): Promise<FundingRate> => {
-  const fundingRate = await fetchUrl(`/api/get-funding-rates?symbol=${symbol}`);
+  const fundingRate = await fetchUrl(`/api/get-funding-rates-for-symbol?symbol=${symbol}`);
   return fundingRate.json();
 };

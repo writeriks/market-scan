@@ -1,14 +1,8 @@
-import {
-  fetchFundingRates,
-  fetchMarketData,
-  getAssetPrice,
-  getFearAndGreedIndex,
-} from '@/services/api-service/api-service';
-import { BinanceFundingRate, FundingRate } from '@/types/funding-rate-type';
+import { fetchCoinbaseMarketData, getAssetPrice } from '@/services/api-service/api-service';
 import { MarketData, Metrics } from '@/types/metrics-type';
 
-const getMarketData = async (): Promise<MarketData> => {
-  const marketData = await fetchMarketData();
+export const getMarketData = async (): Promise<MarketData> => {
+  const marketData = await fetchCoinbaseMarketData();
 
   const btcPrice = await getAssetPrice('btc');
   const ethPrice = await getAssetPrice('eth');
@@ -62,15 +56,4 @@ const getMarketData = async (): Promise<MarketData> => {
     totalMarketCap,
     altcoinData,
   };
-};
-
-export const getMetrics = async (): Promise<Metrics | undefined> => {
-  try {
-    const fearAndGreed = await getFearAndGreedIndex();
-    const marketData = await getMarketData();
-
-    return { fearAndGreed, ...marketData };
-  } catch (e) {
-    console.error(e);
-  }
 };
