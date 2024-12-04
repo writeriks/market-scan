@@ -2,6 +2,8 @@ import Metrics from '@/components/metrics';
 import { getMetrics } from '@/services/fetch-metric-data';
 import CryptoAnalyzer from '@/components/crypto-analyzer/crypto-analyzer';
 
+export const dynamic = 'force-dynamic';
+
 const Home: React.FC = async () => {
   const metrics = await getMetrics();
 
