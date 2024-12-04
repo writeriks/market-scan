@@ -11,9 +11,7 @@ export async function GET(request: NextRequest): Promise<any> {
     const url = `https://api.bybit.com/v5/market/funding/history?category=linear&symbol=${symbol.toUpperCase()}USDT&limit=2`;
     const response = await fetchUrl(url);
     const bybitFundingRateResponse: BybitFundingRateResponse = await response.json();
-    console.log('🚀 ~ GET ~ bybitFundingRateResponse:', bybitFundingRateResponse);
     const fundingRates: BybitFundingRate[] = bybitFundingRateResponse.result.list;
-    console.log('🚀 ~ GET ~ fundingRates:', fundingRates);
 
     /* const fundingRate: FundingRate = {
       exchange: 'Binance',
@@ -38,11 +36,9 @@ export async function GET(request: NextRequest): Promise<any> {
         100
       ).toFixed(2),
     };
-    console.log('🚀 ~ GET ~ fundingRate:', fundingRate);
 
     return NextResponse.json(fundingRate);
   } catch (error: any) {
-    console.log('🚀 ~ GET ~ error:', error);
     return NextResponse.json({
       status: 400,
       statusText: JSON.stringify(error),
