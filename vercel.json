@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/get-metrics": {
-      "regions": ["iad1"]
+      "runtime": "edge"
     }
   }
 }
