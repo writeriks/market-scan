@@ -17,11 +17,12 @@ export const fetchUrl = async (
   payload?: Record<string, any>
 ): Promise<Response> => {
   try {
-    const options: RequestInit = {
+    const options = {
       method: payload ? 'POST' : 'GET',
       headers: {
         ...headers,
       },
+      timeout: 10000,
       body: payload ? JSON.stringify(payload) : undefined,
     };
 
