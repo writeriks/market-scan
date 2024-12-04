@@ -11,3 +11,17 @@ export type BinanceFundingRate = {
   fundingRate: string;
   markPrice: string;
 };
+
+export type BybitFundingRateResponse = {
+  result: {
+    category: string;
+    list: BybitFundingRate[];
+  };
+  time: number;
+};
+
+export type BybitFundingRate = {
+  symbol: string;
+  fundingRate: string;
+  fundingRateTimestamp: string;
+};
