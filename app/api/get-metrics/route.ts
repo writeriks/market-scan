@@ -3,6 +3,7 @@ import {
   getAssetPrice,
   getFearAndGreedIndex,
 } from '@/services/api-service/api-service';
+import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest): Promise<any> {
@@ -64,8 +65,12 @@ export async function GET(request: NextRequest): Promise<any> {
       altcoinData,
     };
 
-    return NextResponse.json(response);
+    return NextResponse.json({ status: 200, ...response });
   } catch (error: any) {
-    return NextResponse.error();
+    return NextResponse.json({
+      status: 400,
+      statusText: JSON.stringify(error),
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    });
   }
 }
