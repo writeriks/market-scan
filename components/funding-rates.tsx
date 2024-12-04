@@ -22,8 +22,6 @@ const FundingRates: React.FC = () => {
     queryFn: () => getFundingRateForAsset(symbol),
   });
 
-  if (!data) return null;
-
   return (
     <Card className='p-6'>
       <div className='flex flex-col space-y-4'>
@@ -39,7 +37,7 @@ const FundingRates: React.FC = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {
+            {data && (
               <TableRow key={data.symbol}>
                 <TableCell className='font-medium'>
                   <span className='text-sm text-muted-foreground ml-2'>{data.exchange}</span>
@@ -75,7 +73,7 @@ const FundingRates: React.FC = () => {
                   </div>
                 </TableCell>
               </TableRow>
-            }
+            )}
           </TableBody>
         </Table>
       </div>

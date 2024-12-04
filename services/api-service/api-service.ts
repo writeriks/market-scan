@@ -22,7 +22,6 @@ export const fetchUrl = async (
       headers: {
         ...headers,
       },
-      timeout: 10000,
       body: payload ? JSON.stringify(payload) : undefined,
     };
 
