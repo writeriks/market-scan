@@ -1,6 +1,7 @@
 import { AssetPrice } from '@/types/asset-type';
 import { CoinMarketCapitalData } from '@/types/coin-marketcap-types';
 import { FearAndGreed } from '@/types/fear-and-greed';
+import { Metrics } from '@/types/metrics-type';
 
 /**
  * Utility function to fetch data from a given URL.
@@ -61,6 +62,16 @@ export const getFearAndGreedIndex = async (): Promise<FearAndGreed> => {
  */
 export const fetchAllAssetsPrices = async (): Promise<any[]> => {
   const url = '/api/get-all-assets';
+  const response = await fetchUrl(url);
+  return response.json();
+};
+
+/**
+ * Fetches all metrics.
+ * @returns A Promise resolving to a list of metrics.
+ */
+export const fetchAllMetrics = async (): Promise<Metrics> => {
+  const url = '/api/get-metrics';
   const response = await fetchUrl(url);
   return response.json();
 };

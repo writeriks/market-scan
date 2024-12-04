@@ -94,7 +94,6 @@ export const getMetrics = async (): Promise<Metrics | undefined> => {
   try {
     const fearAndGreed = await getFearAndGreedIndex();
     const marketData = await getMarketData();
-    /* const fundingRates = await getFundingRates(); */
 
     return { fearAndGreed, ...marketData };
   } catch (e) {
