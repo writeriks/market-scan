@@ -42,6 +42,7 @@ export async function GET(request: NextRequest): Promise<any> {
 
     return NextResponse.json(fundingRate);
   } catch (error: any) {
+    console.log('🚀 ~ GET ~ error:', error);
     return NextResponse.json({
       status: 400,
       statusText: JSON.stringify(error),
