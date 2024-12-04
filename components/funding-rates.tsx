@@ -17,7 +17,7 @@ import { useState } from 'react';
 const FundingRates: React.FC = () => {
   const [symbol, setSymbol] = useState<string>('btc');
 
-  const { data, refetch: getFundingRateForSymbol } = useQuery({
+  const { data } = useQuery({
     queryKey: ['get-funding-rates'],
     queryFn: () => getFundingRateForAsset(symbol),
   });
