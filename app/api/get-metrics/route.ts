@@ -3,6 +3,7 @@ import {
   getAssetPrice,
   getFearAndGreedIndex,
 } from '@/services/api-service/api-service';
+import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest): Promise<any> {
@@ -11,19 +12,20 @@ export async function GET(request: NextRequest): Promise<any> {
     const coinbaseData = await fetchCoinbaseMarketData();
 
     const btcPrice = await getAssetPrice('btc');
+    console.log('🚀 ~ GET ~ btcPrice:', btcPrice);
     const ethPrice = await getAssetPrice('eth');
 
     const btcDominance = {
       name: 'BTC Dominance',
       value: coinbaseData.btc_dominance.toFixed(2),
       change: coinbaseData.btc_dominance_24h_percentage_change.toFixed(2),
-      price: btcPrice.price,
+      price: btcPrice.lastPrice,
     };
     const ethDominance = {
       name: 'ETH Dominance',
       value: coinbaseData.eth_dominance.toFixed(2),
       change: coinbaseData.eth_dominance_24h_percentage_change.toFixed(2),
-      price: ethPrice.price,
+      price: ethPrice.lastPrice,
     };
     const stableCoinMarketCap = {
       name: 'Satble Coin Market Cap',
@@ -64,8 +66,12 @@ export async function GET(request: NextRequest): Promise<any> {
       altcoinData,
     };
 
-    return NextResponse.json(response);
+    return NextResponse.json({ status: 200, ...response });
   } catch (error: any) {
-    return NextResponse.error();
+    return NextResponse.json({
+      status: 400,
+      statusText: JSON.stringify(error),
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    });
   }
 }

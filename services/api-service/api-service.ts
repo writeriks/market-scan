@@ -1,4 +1,4 @@
-import { AssetPrice } from '@/types/asset-type';
+import { AssetPrice, MexcASsetPrice } from '@/types/asset-type';
 import { CoinMarketCapitalData } from '@/types/coin-marketcap-types';
 import { FearAndGreed } from '@/types/fear-and-greed';
 import { FundingRate } from '@/types/funding-rate-type';
@@ -39,8 +39,9 @@ export const fetchUrl = async (
  * @param ticker - The asset's ticker symbol.
  * @returns A Promise resolving to the asset price.
  */
-export const getAssetPrice = async (ticker: string): Promise<AssetPrice> => {
-  const url = `https://fapi.binance.com/fapi/v1/ticker/price?symbol=${ticker.toUpperCase()}USDT`;
+export const getAssetPrice = async (ticker: string): Promise<MexcASsetPrice> => {
+  // https://fapi.binance.com/fapi/v1/ticker/price https://api.mexc.com/api/v3/ticker/24hr?symbol=BTCUSDT
+  const url = `https://api.mexc.com/api/v3/ticker/24hr?symbol=${ticker.toUpperCase()}USDT`;
   const response = await fetchUrl(url);
   return response.json();
 };
