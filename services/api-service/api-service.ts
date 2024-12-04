@@ -20,7 +20,6 @@ export const fetchUrl = async (
     const options: RequestInit = {
       method: payload ? 'POST' : 'GET',
       headers: {
-        'Content-Type': 'application/json',
         ...headers,
       },
       body: payload ? JSON.stringify(payload) : undefined,
