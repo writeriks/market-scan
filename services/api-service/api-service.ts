@@ -1,6 +1,7 @@
 import { AssetPrice } from '@/types/asset-type';
 import { CoinMarketCapitalData } from '@/types/coin-marketcap-types';
 import { FearAndGreed } from '@/types/fear-and-greed';
+import { FundingRate } from '@/types/funding-rate-type';
 import { Metrics } from '@/types/metrics-type';
 
 /**
@@ -109,4 +110,9 @@ export const fetchMarketData = async (): Promise<CoinMarketCapitalData> => {
 export const fetchFundingRates = async (url: string): Promise<any[]> => {
   const response = await fetchUrl(url);
   return response.json();
+};
+
+export const getFundingRateForAsset = async (symbol: string): Promise<FundingRate> => {
+  const fundingRate = await fetchUrl(`/api/get-funding-rates?symbol=${symbol}`);
+  return fundingRate.json();
 };
