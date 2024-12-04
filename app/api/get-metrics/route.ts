@@ -3,7 +3,6 @@ import {
   getAssetPrice,
   getFearAndGreedIndex,
 } from '@/services/api-service/api-service';
-import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest): Promise<any> {
@@ -12,7 +11,6 @@ export async function GET(request: NextRequest): Promise<any> {
     const coinbaseData = await fetchCoinbaseMarketData();
 
     const btcPrice = await getAssetPrice('btc');
-    console.log('🚀 ~ GET ~ btcPrice:', btcPrice);
     const ethPrice = await getAssetPrice('eth');
 
     const btcDominance = {
