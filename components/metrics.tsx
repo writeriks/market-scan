@@ -12,6 +12,7 @@ const Metrics: React.FC = () => {
     queryKey: ['get-all-metrics'],
     queryFn: () => fetchAllMetrics(),
   });
+  console.log('🚀 ~ metrics:', metrics);
 
   if (!metrics) return null;
 
