@@ -15,11 +15,11 @@ import { TrendingUp, TrendingDown } from 'lucide-react';
 import { useState } from 'react';
 
 const FundingRates: React.FC = () => {
-  const [symbol, setSymbol] = useState<string>('btc');
+  const [symbol, setSymbol] = useState<string>();
 
   const { data } = useQuery({
     queryKey: ['get-funding-rates'],
-    queryFn: () => getFundingRateForAsset(symbol),
+    queryFn: () => getFundingRateForAsset(symbol || 'BTC'),
   });
 
   return (
