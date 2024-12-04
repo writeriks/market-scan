@@ -6,12 +6,9 @@ export async function GET(request: NextRequest): Promise<any> {
   try {
     const { searchParams } = new URL(request.url);
     const symbol = searchParams.get('symbol') ?? '';
-    console.log('🚀 ~ GET ~ symbol:', symbol);
 
-    /* const getBinanceLastTwoFundingRatesForSymbol = async (symbol: string): Promise<FundingRate> => { */
     const url = `https://fapi.binance.com/fapi/v1/fundingRate?symbol=${symbol.toUpperCase()}USDT&limit=2`;
     const fundingRates: BinanceFundingRate[] = await fetchFundingRates(url);
-    console.log('🚀 ~ /*getBinanceLastTwoFundingRatesForSymbol ~ fundingRates:', fundingRates);
 
     const fundingRate: FundingRate = {
       exchange: 'Binance',
@@ -24,12 +21,6 @@ export async function GET(request: NextRequest): Promise<any> {
         100
       ).toFixed(2),
     };
-    console.log('🚀 ~ /*getBinanceLastTwoFundingRatesForSymbol ~ fundingRate:', fundingRate);
-    /* }; */
-
-    /* const btcBinanceFundingRates = await getBinanceLastTwoFundingRatesForSymbol(symbol); */
-
-    /* const response = btcBinanceFundingRates; */
 
     return NextResponse.json(fundingRate);
   } catch (error: any) {

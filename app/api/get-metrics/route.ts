@@ -12,19 +12,20 @@ export async function GET(request: NextRequest): Promise<any> {
     const coinbaseData = await fetchCoinbaseMarketData();
 
     const btcPrice = await getAssetPrice('btc');
+    console.log('🚀 ~ GET ~ btcPrice:', btcPrice);
     const ethPrice = await getAssetPrice('eth');
 
     const btcDominance = {
       name: 'BTC Dominance',
       value: coinbaseData.btc_dominance.toFixed(2),
       change: coinbaseData.btc_dominance_24h_percentage_change.toFixed(2),
-      price: btcPrice.price,
+      price: btcPrice.lastPrice,
     };
     const ethDominance = {
       name: 'ETH Dominance',
       value: coinbaseData.eth_dominance.toFixed(2),
       change: coinbaseData.eth_dominance_24h_percentage_change.toFixed(2),
-      price: ethPrice.price,
+      price: ethPrice.lastPrice,
     };
     const stableCoinMarketCap = {
       name: 'Satble Coin Market Cap',
