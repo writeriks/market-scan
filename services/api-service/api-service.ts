@@ -22,7 +22,7 @@ export const fetchUrl = async (
         ...headers,
       },
       body: payload ? JSON.stringify(payload) : undefined,
-      cache: 'no-store',
+      cache: 'no-cache',
     };
 
     const response = await fetch(url, options);
