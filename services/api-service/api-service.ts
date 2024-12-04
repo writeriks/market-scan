@@ -22,7 +22,7 @@ export const fetchUrl = async (
         ...headers,
       },
       body: payload ? JSON.stringify(payload) : undefined,
-      next: { revalidate: 60 }, // Assuming a custom configuration for the framework
+      cache: 'no-store',
     };
 
     const response = await fetch(url, options);
