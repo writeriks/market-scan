@@ -12,14 +12,16 @@ import {
 import { getFundingRateForAsset } from '@/services/api-service/api-service';
 import { useQuery } from '@tanstack/react-query';
 import { TrendingUp, TrendingDown } from 'lucide-react';
-import { useState } from 'react';
 
-const FundingRates: React.FC = () => {
-  const [symbol, setSymbol] = useState<string>();
+interface FundingRateProps {
+  symbol: string;
+  setSymbol: (symbol: string) => void;
+}
 
+const FundingRates: React.FC<FundingRateProps> = ({ symbol }) => {
   const { data: fundingRates } = useQuery({
     queryKey: ['get-funding-rates'],
-    queryFn: () => getFundingRateForAsset(symbol || 'BTC'),
+    queryFn: () => getFundingRateForAsset(symbol),
   });
 
   return (
@@ -39,7 +41,7 @@ const FundingRates: React.FC = () => {
           <TableBody>
             {fundingRates &&
               fundingRates.map(fundingRate => (
-                <TableRow key={fundingRate.symbol}>
+                <TableRow key={`${fundingRate.symbol}-${fundingRate.exchange}`}>
                   <TableCell className='font-medium'>
                     <span className='text-sm text-muted-foreground ml-2'>
                       {fundingRate.exchange}

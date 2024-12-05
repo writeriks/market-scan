@@ -4,7 +4,7 @@ export type AssetPrice = {
   time: number;
 };
 
-export type MexcASsetPrice = {
+export type MexcAssetInfo = {
   symbol: string;
   priceChange: string;
   priceChangePercent: string;
@@ -22,4 +22,9 @@ export type MexcASsetPrice = {
   openTime: number;
   closeTime: number;
   count: number | null;
+};
+
+export type MexcAssetPrice = {
+  symbol: string;
+  price: string;
 };

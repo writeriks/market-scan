@@ -46,10 +46,19 @@ export type AltcoinData = {
 };
 
 export type MarketData = {
-  btcDominance: Dominance;
-  ethDominance: Dominance;
-  stableCoinMarketCap: StableCoinMarketCap;
-  defiData: DefiMarketCap;
-  totalMarketCap: TotalMarketCap;
-  altcoinData: AltcoinData;
+  name: string;
+  value: string;
+  change: number;
+  price: string;
+  volume: string;
 };
+
+export enum MetricNames {
+  FEAR_AND_GREED = 'Fear And Greed',
+  BTC_DOMINANCE = 'BTC Dominance',
+  ETH_DOMINANCE = 'ETH Dominance',
+  STABLE_COIN_MARKET_CAP = 'Satble Coin Market Cap',
+  DEFI_MARKET_CAP = 'Defi Market Cap',
+  TOTAL_MARKET_CAP = 'Total Market Cap',
+  ALTCOIN_MARKET_CAP = 'Altcoin Market Cap',
+}
