@@ -48,6 +48,7 @@ export async function GET(request: NextRequest): Promise<any> {
         100
       ).toFixed(2),
     };
+
     const altcoinData = {
       name: 'Altcoin Market Cap',
       value: coinbaseData.quote.USD.altcoin_market_cap.toFixed(2),
