@@ -1,70 +1,75 @@
 import {
   fetchCoinbaseMarketData,
+  getAssetInfo,
   getAssetPrice,
   getFearAndGreedIndex,
 } from '@/services/api-service/api-service';
-import { NextRequest, NextResponse } from 'next/server';
+import { formatCurrency } from '@/services/util-service/util-service';
+import { MetricNames } from '@/types/metrics-type';
+import { NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest): Promise<any> {
+export async function GET(): Promise<any> {
   try {
-    const fearAndGreed = await getFearAndGreedIndex();
+    const fearAndGreedIndex = await getFearAndGreedIndex();
     const coinbaseData = await fetchCoinbaseMarketData();
 
     const btcPrice = await getAssetPrice('btc');
+    const btcInfo = await getAssetInfo('btc');
+
     const ethPrice = await getAssetPrice('eth');
+    const ethInfo = await getAssetInfo('btc');
 
-    const btcDominance = {
-      name: 'BTC Dominance',
-      value: coinbaseData.btc_dominance.toFixed(2),
-      change: coinbaseData.btc_dominance_24h_percentage_change.toFixed(2),
-      price: btcPrice.lastPrice,
-    };
-    const ethDominance = {
-      name: 'ETH Dominance',
-      value: coinbaseData.eth_dominance.toFixed(2),
-      change: coinbaseData.eth_dominance_24h_percentage_change.toFixed(2),
-      price: ethPrice.lastPrice,
-    };
-    const stableCoinMarketCap = {
-      name: 'Satble Coin Market Cap',
-      value: coinbaseData.stablecoin_market_cap.toFixed(2),
-      change: coinbaseData.stablecoin_24h_percentage_change.toFixed(2),
-    };
+    const metrics = [
+      {
+        name: MetricNames.FEAR_AND_GREED,
+        value: fearAndGreedIndex.value,
+      },
 
-    const defiData = {
-      name: 'Defi Market Cap',
-      value: coinbaseData.defi_market_cap.toFixed(2),
-      volume: coinbaseData.defi_volume_24h.toFixed(2),
-      change: coinbaseData.defi_24h_percentage_change.toFixed(2),
-    };
+      {
+        name: MetricNames.BTC_DOMINANCE,
+        value: coinbaseData.btc_dominance.toFixed(2),
+        change: coinbaseData.btc_dominance_24h_percentage_change,
+        volume: formatCurrency(Number(btcInfo.volume)),
+        price: formatCurrency(Number(btcPrice.price)),
+      },
+      {
+        name: MetricNames.ETH_DOMINANCE,
+        value: coinbaseData.eth_dominance.toFixed(2),
+        change: coinbaseData.eth_dominance_24h_percentage_change,
+        volume: formatCurrency(Number(ethInfo.volume)),
+        price: formatCurrency(Number(ethPrice.price)),
+      },
+      {
+        name: MetricNames.STABLE_COIN_MARKET_CAP,
+        value: formatCurrency(Number(coinbaseData.stablecoin_market_cap.toFixed(2))),
+        change: coinbaseData.stablecoin_24h_percentage_change,
+      },
 
-    const totalMarketCap = {
-      name: 'Total Market Cap',
-      value: coinbaseData.quote.USD.total_market_cap.toFixed(2),
-      volume: coinbaseData.quote.USD.total_volume_24h.toFixed(2),
-      change: (
-        (coinbaseData.quote.USD.total_market_cap * 100) /
-          coinbaseData.quote.USD.total_market_cap_yesterday -
-        100
-      ).toFixed(2),
-    };
-    const altcoinData = {
-      name: 'Altcoin Market Cap',
-      value: coinbaseData.quote.USD.altcoin_market_cap.toFixed(2),
-      volume: coinbaseData.quote.USD.altcoin_volume_24h.toFixed(2),
-    };
+      {
+        name: MetricNames.DEFI_MARKET_CAP,
+        value: formatCurrency(Number(coinbaseData.defi_market_cap.toFixed(2))),
+        volume: formatCurrency(Number(coinbaseData.defi_volume_24h.toFixed(2))),
+        change: coinbaseData.defi_24h_percentage_change,
+      },
 
-    const response = {
-      fearAndGreed,
-      btcDominance,
-      ethDominance,
-      stableCoinMarketCap,
-      defiData,
-      totalMarketCap,
-      altcoinData,
-    };
+      {
+        name: MetricNames.TOTAL_MARKET_CAP,
+        value: formatCurrency(Number(coinbaseData.quote.USD.total_market_cap.toFixed(2))),
+        volume: formatCurrency(Number(coinbaseData.quote.USD.total_volume_24h.toFixed(2))),
+        change:
+          (coinbaseData.quote.USD.total_market_cap * 100) /
+            coinbaseData.quote.USD.total_market_cap_yesterday -
+          100,
+      },
 
-    return NextResponse.json({ status: 200, ...response });
+      {
+        name: MetricNames.ALTCOIN_MARKET_CAP,
+        value: formatCurrency(Number(coinbaseData.quote.USD.altcoin_market_cap.toFixed(2))),
+        volume: formatCurrency(Number(coinbaseData.quote.USD.altcoin_volume_24h.toFixed(2))),
+      },
+    ];
+
+    return NextResponse.json(metrics);
   } catch (error: any) {
     return NextResponse.json({
       status: 400,

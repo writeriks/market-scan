@@ -6,7 +6,12 @@ import AutocompleteInput, {
   AutoCompleteInputOption,
 } from '@/components/auto-complete-input/auto-complete-input';
 
-const SearchTicker: React.FC = () => {
+interface SearchTickerProps {
+  symbol: string;
+  setSymbol: (symbol: string) => void;
+}
+
+const SearchTicker: React.FC<SearchTickerProps> = ({ setSymbol, symbol }) => {
   const frameworks: AutoCompleteInputOption[] = [
     { value: 'Next.js', label: 'Next.js' },
     { value: 'Nveltekit', label: 'SvelteKit' },

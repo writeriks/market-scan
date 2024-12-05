@@ -1,8 +1,8 @@
-import { AssetPrice, MexcASsetPrice } from '@/types/asset-type';
+import { MexcAssetInfo, MexcAssetPrice } from '@/types/asset-type';
 import { CoinMarketCapitalData } from '@/types/coin-marketcap-types';
 import { FearAndGreed } from '@/types/fear-and-greed';
 import { FundingRate } from '@/types/funding-rate-type';
-import { Metrics } from '@/types/metrics-type';
+import { MarketData } from '@/types/metrics-type';
 
 /**
  * Utility function to fetch data from a given URL.
@@ -39,7 +39,19 @@ export const fetchUrl = async (
  * @param ticker - The asset's ticker symbol.
  * @returns A Promise resolving to the asset price.
  */
-export const getAssetPrice = async (ticker: string): Promise<MexcASsetPrice> => {
+export const getAssetPrice = async (ticker: string): Promise<MexcAssetPrice> => {
+  // https://fapi.binance.com/fapi/v1/ticker/price https://api.mexc.com/api/v3/ticker/24hr?symbol=BTCUSDT
+  const url = `https://api.mexc.com/api/v3/ticker/price?symbol=${ticker.toUpperCase()}USDT`;
+  const response = await fetchUrl(url);
+  return response.json();
+};
+
+/**
+ * Fetches the price of a specific asset by ticker symbol.
+ * @param ticker - The asset's ticker symbol.
+ * @returns A Promise resolving to the asset price.
+ */
+export const getAssetInfo = async (ticker: string): Promise<MexcAssetInfo> => {
   // https://fapi.binance.com/fapi/v1/ticker/price https://api.mexc.com/api/v3/ticker/24hr?symbol=BTCUSDT
   const url = `https://api.mexc.com/api/v3/ticker/24hr?symbol=${ticker.toUpperCase()}USDT`;
   const response = await fetchUrl(url);
@@ -71,7 +83,7 @@ export const fetchAllAssetsPrices = async (): Promise<any[]> => {
  * Fetches all metrics.
  * @returns A Promise resolving to a list of metrics.
  */
-export const fetchAllMetrics = async (): Promise<Metrics> => {
+export const fetchAllMetrics = async (): Promise<MarketData[]> => {
   const url = '/api/get-metrics';
   const response = await fetchUrl(url);
   return response.json();
@@ -117,7 +129,7 @@ export const fetchFundingRates = async (url: string): Promise<any[]> => {
  * @param symbol - The asset's symbol.
  * @returns A Promise resolving to the asset's funding rate.
  */
-export const getFundingRateForAsset = async (symbol: string): Promise<FundingRate> => {
+export const getFundingRateForAsset = async (symbol: string): Promise<FundingRate[]> => {
   const fundingRate = await fetchUrl(`/api/get-funding-rates-for-symbol?symbol=${symbol}`);
   return fundingRate.json();
 };
