@@ -4,7 +4,7 @@ import {
   getAssetPrice,
   getFearAndGreedIndex,
 } from '@/services/api-service/api-service';
-import { formatCurrency } from '@/services/util-service/util-service';
+import { formatCurrency, formatLargeNumber } from '@/services/util-service/util-service';
 import { MetricNames } from '@/types/metrics-type';
 import { NextResponse } from 'next/server';
 
@@ -17,7 +17,7 @@ export async function GET(): Promise<any> {
     const btcInfo = await getAssetInfo('btc');
 
     const ethPrice = await getAssetPrice('eth');
-    const ethInfo = await getAssetInfo('btc');
+    const ethInfo = await getAssetInfo('eth');
 
     const metrics = [
       {
@@ -29,14 +29,14 @@ export async function GET(): Promise<any> {
         name: MetricNames.BTC_DOMINANCE,
         value: coinbaseData.btc_dominance.toFixed(2),
         change: coinbaseData.btc_dominance_24h_percentage_change,
-        volume: formatCurrency(Number(btcInfo.volume)),
+        volume: formatLargeNumber(Number(btcInfo.quoteVolume)),
         price: formatCurrency(Number(btcPrice.price)),
       },
       {
         name: MetricNames.ETH_DOMINANCE,
         value: coinbaseData.eth_dominance.toFixed(2),
         change: coinbaseData.eth_dominance_24h_percentage_change,
-        volume: formatCurrency(Number(ethInfo.volume)),
+        volume: formatLargeNumber(Number(ethInfo.quoteVolume)),
         price: formatCurrency(Number(ethPrice.price)),
       },
       {

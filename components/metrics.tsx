@@ -19,6 +19,39 @@ const Metrics: React.FC = () => {
     switch (metric.name) {
       case MetricNames.FEAR_AND_GREED:
         return <FearGreedIndexMeter value={Number(metric.value)} />;
+      case MetricNames.BTC_DOMINANCE:
+      case MetricNames.ETH_DOMINANCE:
+        return (
+          <>
+            <p className='text-sm text-muted-foreground'>{metric.name}</p>
+            <p className='text-sm font-bold'>{metric.value}%</p>
+            <div className='flex items-center text-sm mt-1'>
+              {metric.change > 0 ? (
+                <TrendingUp className='w-4 h-4 text-green-500 mr-1' />
+              ) : metric.change < 0 ? (
+                <TrendingDown className='w-4 h-4 text-red-500 mr-1' />
+              ) : null}
+              {metric.change && (
+                <span className={metric.change > 0 ? 'text-green-500' : 'text-red-500'}>
+                  {metric.change.toFixed(2)}%
+                </span>
+              )}
+            </div>
+            <div className='flex items-center mt-1 text-sm'>
+              {metric.price && (
+                <p>
+                  Price:{' '}
+                  <span className={metric.change > 0 ? 'text-green-500' : 'text-red-500'}>
+                    {metric.price}
+                  </span>
+                </p>
+              )}
+            </div>
+            <div className='flex items-center mt-1 text-sm'>
+              {metric.volume && <p>Volume: {metric.volume}</p>}
+            </div>
+          </>
+        );
       default:
         return (
           <>
