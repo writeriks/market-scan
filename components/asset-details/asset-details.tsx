@@ -88,12 +88,6 @@ const AssetDetails: React.FC<AssetDetailsProps> = ({ symbol }) => {
                 </TableRow>
                 <TableRow>
                   <TableCell className='font-medium'>
-                    <span className='text-sm text-muted-foreground ml-2 flex'>Last Update</span>
-                  </TableCell>
-                  <TableCell>{formatStringDateToHour(assetDetails?.last_updated ?? '')}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className='font-medium'>
                     <span className='text-sm text-muted-foreground ml-2 flex'>Volume 24h</span>
                   </TableCell>
                   <TableCell>
@@ -228,6 +222,12 @@ const AssetDetails: React.FC<AssetDetailsProps> = ({ symbol }) => {
                     </div>
                   </TableCell>
                 </TableRow>
+                <TableRow>
+                  <TableCell className='font-medium'>
+                    <span className='text-sm text-muted-foreground ml-2 flex'>Last Update</span>
+                  </TableCell>
+                  <TableCell>{formatStringDateToHour(assetDetails?.last_updated ?? '')}</TableCell>
+                </TableRow>{' '}
               </>
             }
           </TableBody>
