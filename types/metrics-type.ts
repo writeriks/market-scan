@@ -57,7 +57,7 @@ export enum MetricNames {
   FEAR_AND_GREED = 'Fear And Greed',
   BTC_DOMINANCE = 'BTC Dominance',
   ETH_DOMINANCE = 'ETH Dominance',
-  STABLE_COIN_MARKET_CAP = 'Satble Coin Market Cap',
+  STABLE_COIN_MARKET_CAP = 'Stable Coin Market Cap',
   DEFI_MARKET_CAP = 'Defi Market Cap',
   TOTAL_MARKET_CAP = 'Total Market Cap',
   ALTCOIN_MARKET_CAP = 'Altcoin Market Cap',
