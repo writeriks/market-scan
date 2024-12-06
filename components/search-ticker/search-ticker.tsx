@@ -1,39 +1,34 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 
-import AutocompleteInput, {
-  AutoCompleteInputOption,
-} from '@/components/auto-complete-input/auto-complete-input';
+import AutocompleteInput from '@/components/auto-complete-input/auto-complete-input';
+import { MexcAssetInfo } from '@/types/asset-type';
 
 interface SearchTickerProps {
   symbol: string;
   setSymbol: (symbol: string) => void;
+  allAssets: MexcAssetInfo[];
 }
 
-const SearchTicker: React.FC<SearchTickerProps> = ({ setSymbol, symbol }) => {
-  const frameworks: AutoCompleteInputOption[] = [
-    { value: 'Next.js', label: 'Next.js' },
-    { value: 'Nveltekit', label: 'SvelteKit' },
-    { value: 'Nuxt.js', label: 'Nuxt.js' },
-    { value: 'Remix', label: 'Remix' },
-    { value: 'Astro', label: 'Astro' },
-  ];
-
-  const [selectedFramework, setSelectedFramework] = useState('');
+const SearchTicker: React.FC<SearchTickerProps> = ({ setSymbol, symbol, allAssets }) => {
+  const options = useMemo(() => {
+    return allAssets.map(asset => ({
+      value: asset.symbol,
+      label: asset.symbol,
+    }));
+  }, [allAssets]);
 
   return (
     <div>
       <AutocompleteInput
-        options={frameworks}
-        value={selectedFramework}
-        onChange={setSelectedFramework}
+        options={options}
+        value={symbol}
+        onChange={setSymbol}
         placeholder='Type to search ticker...'
       />
-      {selectedFramework && (
-        <p className='mt-4'>
-          You selected: {frameworks.find(f => f.value === selectedFramework)?.label}
-        </p>
+      {symbol && (
+        <p className='mt-4'>You selected: {allAssets.find(f => f.symbol === symbol)?.symbol}</p>
       )}
     </div>
   );

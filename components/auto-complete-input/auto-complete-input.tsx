@@ -31,12 +31,16 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
   }, [value]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const newValue = e.target.value;
+    const newValue = e.target.value.toLowerCase();
     setInputValue(newValue);
 
-    const filtered = options.filter(option =>
-      option.label.toLowerCase().includes(newValue.toLowerCase())
-    );
+    const filtered = options.filter(option => {
+      const labelLowerCase = option.label.toLowerCase();
+      return (
+        labelLowerCase.startsWith(newValue) && // Matches starting with the entered text
+        labelLowerCase.includes(newValue) // Matches containing the entered text
+      );
+    });
     setFilteredOptions(newValue === '' ? [] : filtered);
     setHighlightedIndex(-1);
   };
@@ -81,8 +85,26 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
     }
   }, [highlightedIndex]);
 
+  const renderHighlightedText = (label: string, query: string): React.ReactElement | string => {
+    const index = label.toLowerCase().indexOf(query.toLowerCase());
+    if (index === -1) return label;
+
+    const beforeMatch = label.slice(0, index);
+    const match = label.slice(index, index + query.length);
+    const afterMatch = label.slice(index + query.length);
+
+    return (
+      <>
+        {beforeMatch}
+        <span className='font-bold'>{match}</span>
+        {afterMatch}
+      </>
+    );
+  };
+
   return (
     <div className='relative w-full max-w-xs'>
+      {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
       <input
         ref={inputRef}
         type='text'
@@ -113,7 +135,7 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
               role='option'
               aria-selected={index === highlightedIndex}
             >
-              {option.label}
+              {renderHighlightedText(option.label, inputValue)}
             </li>
           ))}
         </ul>

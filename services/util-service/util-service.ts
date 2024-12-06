@@ -24,3 +24,11 @@ export function formatCurrency(value: number): string {
 export function formatNumberDecimalPoints(number: number): string {
   return number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
+
+export function calculatePercentageChange(current: number, previous: number): number {
+  if (current === 0 || previous === 0) {
+    return 0;
+  }
+
+  return ((current - previous) / previous) * 100;
+}

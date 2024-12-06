@@ -1,4 +1,5 @@
 import { fetchUrl } from '@/services/api-service/api-service';
+import { calculatePercentageChange } from '@/services/util-service/util-service';
 import {
   BinanceFundingRate,
   BybitFundingRateResponse,
@@ -12,47 +13,62 @@ export async function GET(request: NextRequest): Promise<any> {
     const symbol = searchParams.get('symbol') ?? '';
 
     // GET Binance funding rate
-    const binanceFundingRateUrl = `https://fapi.binance.com/fapi/v1/fundingRate?symbol=${symbol.toUpperCase()}USDT&limit=2`;
+    const binanceFundingRateUrl = `https://fapi.binance.com/fapi/v1/fundingRate?symbol=${symbol.toUpperCase()}&limit=2`;
     const binanceResponse = await fetchUrl(binanceFundingRateUrl);
     const binanceFundingRateResponse: BinanceFundingRate[] = await binanceResponse.json();
+    console.log('🚀 ~ GET ~ binanceFundingRateResponse:', binanceFundingRateResponse);
 
     // GET Bybit funding rate
-    const bybitFundingRateUrl = `https://api.bybit.com/v5/market/funding/history?category=linear&symbol=${symbol.toUpperCase()}USDT&limit=2`;
+    const bybitFundingRateUrl = `https://api.bybit.com/v5/market/funding/history?category=linear&symbol=${symbol.toUpperCase()}&limit=2`;
     const bybitResponse = await fetchUrl(bybitFundingRateUrl);
     const bybitFundingRateResponse: BybitFundingRateResponse = await bybitResponse.json();
-    const fundingRates = bybitFundingRateResponse.result.list;
+    const bybitFundingRates = bybitFundingRateResponse.result.list;
 
-    const binanceFundingRate: FundingRate = {
+    let binanceFundingRate: FundingRate = {
       exchange: 'Binance',
-      symbol: binanceFundingRateResponse[1].symbol,
-      fundingTime: binanceFundingRateResponse[1].fundingTime,
-      fundingRate: binanceFundingRateResponse[1].fundingRate,
-      percentageChange: (
-        ((Number(binanceFundingRateResponse[1].fundingRate) -
-          Number(binanceFundingRateResponse[0].fundingRate)) /
-          Number(binanceFundingRateResponse[0].fundingRate)) *
-        100
-      ).toFixed(2),
+      symbol: '',
+      fundingTime: 0,
+      fundingRate: '',
+      percentageChange: '',
     };
+    if (binanceFundingRateResponse.length) {
+      binanceFundingRate = {
+        ...binanceFundingRate,
+        symbol: binanceFundingRateResponse[1].symbol,
+        fundingTime: binanceFundingRateResponse[1].fundingTime,
+        fundingRate: binanceFundingRateResponse[1].fundingRate,
+        percentageChange: calculatePercentageChange(
+          Number(binanceFundingRateResponse[1].fundingRate),
+          Number(binanceFundingRateResponse[0].fundingRate)
+        ).toFixed(2),
+      };
+    }
 
-    const bybitFundingRate: FundingRate = {
+    let bybitFundingRate: FundingRate = {
       exchange: 'Bybit',
-      symbol: fundingRates[0].symbol,
-      fundingTime: Number(fundingRates[0].fundingRateTimestamp),
-      fundingRate: fundingRates[0].fundingRate,
-      percentageChange: (
-        ((Number(fundingRates[0].fundingRate) - Number(fundingRates[1].fundingRate)) /
-          Number(fundingRates[1].fundingRate)) *
-        100
-      ).toFixed(2),
+      symbol: '',
+      fundingTime: 0,
+      fundingRate: '',
+      percentageChange: '',
     };
+    if (bybitFundingRates.length) {
+      bybitFundingRate = {
+        ...bybitFundingRate,
+        symbol: bybitFundingRates[0].symbol,
+        fundingTime: Number(bybitFundingRates[0].fundingRateTimestamp),
+        fundingRate: bybitFundingRates[0].fundingRate,
+        percentageChange: calculatePercentageChange(
+          Number(bybitFundingRates[0].fundingRate),
+          Number(bybitFundingRates[1].fundingRate)
+        ).toFixed(2),
+      };
+    }
 
     return NextResponse.json([binanceFundingRate, bybitFundingRate]);
-  } catch (error: any) {
+  } catch {
     return NextResponse.json({
-      status: 400,
-      statusText: JSON.stringify(error),
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      status: 500,
+      statusText: 'Internal Server Error',
     });
   }
 }
