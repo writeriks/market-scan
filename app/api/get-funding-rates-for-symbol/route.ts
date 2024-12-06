@@ -16,7 +16,6 @@ export async function GET(request: NextRequest): Promise<any> {
     const binanceFundingRateUrl = `https://fapi.binance.com/fapi/v1/fundingRate?symbol=${symbol.toUpperCase()}&limit=2`;
     const binanceResponse = await fetchUrl(binanceFundingRateUrl);
     const binanceFundingRateResponse: BinanceFundingRate[] = await binanceResponse.json();
-    console.log('🚀 ~ GET ~ binanceFundingRateResponse:', binanceFundingRateResponse);
 
     // GET Bybit funding rate
     const bybitFundingRateUrl = `https://api.bybit.com/v5/market/funding/history?category=linear&symbol=${symbol.toUpperCase()}&limit=2`;
