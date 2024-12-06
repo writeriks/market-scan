@@ -23,24 +23,24 @@ const CryptoAnalyzer: React.FC = () => {
     queryFn: () => fetchPriceForAsset(symbol),
   });
 
-  const { data: fundingRates } = useQuery({
+  const { data: fundingRates, isLoading } = useQuery({
     queryKey: [`get-funding-rates-${symbol}`],
     queryFn: () => getFundingRateForAsset(symbol),
   });
 
-  if (!allAssets || !assetPrice || !fundingRates) {
+  /*     if (!allAssets || !assetPrice || !fundingRates) {
     return null;
-  }
+  } */
 
   return (
     <div className='w-full flex-col'>
       <div className='m-2'>
-        <SearchTicker setSymbol={setSymbol} symbol={symbol} allAssets={allAssets} />
+        <SearchTicker setSymbol={setSymbol} symbol={symbol} allAssets={allAssets ?? []} />
       </div>
       <div className='flex flex-col lg:flex-row'>
         <div className='lg:w-1/2 p-4'>Coin Details Here</div>
         <div className='lg:w-1/2 p-4'>
-          {fundingRates && <FundingRates fundingRates={fundingRates} />}
+          <FundingRates fundingRates={fundingRates ?? []} isLoading={isLoading} />
         </div>
       </div>
     </div>

@@ -8,12 +8,21 @@ import { fetchAllMetrics } from '@/services/api-service/api-service';
 import { MarketData, MetricNames } from '@/types/metrics-type';
 
 const Metrics: React.FC = () => {
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['get-all-metrics'],
     queryFn: () => fetchAllMetrics(),
   });
 
-  if (!data) return null;
+  const mockedMetrics: MarketData[] = [
+    { name: MetricNames.FEAR_AND_GREED, value: '0', change: 0, price: '0', volume: '000' },
+    { name: MetricNames.BTC_DOMINANCE, value: '0', change: 0, price: '0', volume: '000' },
+    { name: MetricNames.ETH_DOMINANCE, value: '0', change: 0, price: '0', volume: '000' },
+    { name: MetricNames.STABLE_COIN_MARKET_CAP, value: '0', change: 0, price: '0', volume: '000' },
+    { name: MetricNames.DEFI_MARKET_CAP, value: '0', change: 0, price: '0', volume: '000' },
+    { name: MetricNames.TOTAL_MARKET_CAP, value: '0', change: 0, price: '0', volume: '000' },
+    { name: MetricNames.ALTCOIN_MARKET_CAP, value: '0', change: 0, price: '0', volume: '000' },
+  ];
+  /* if (!data) return null; */
 
   const renderMetrics = (metric: MarketData): any => {
     switch (metric.name) {
@@ -91,8 +100,13 @@ const Metrics: React.FC = () => {
     <div className='lg:p-4'>
       <div className='flex flex-col items-center md:items-start justify-center '>
         <div className='grid grid-cols-2 xl:grid-cols-7 md:grid-cols-5 gap-4'>
-          {data.map((metric, index) => (
-            <Card key={`${metric.name}-${index}`} className='p-4 w-40 md:w-36 lg:w-full'>
+          {(data ?? mockedMetrics).map((metric, index) => (
+            <Card key={`${metric.name}-${index}`} className='p-4 w-40 md:w-36 lg:w-full relative'>
+              {isLoading && (
+                <div className='absolute inset-0 bg-black/50 flex items-center justify-center z-10'>
+                  <div className='text-white  text-sm'>Loading...</div>
+                </div>
+              )}
               <div className='flex items-start justify-between'>
                 <div>{renderMetrics(metric)}</div>
               </div>

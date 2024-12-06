@@ -1,11 +1,13 @@
+import { getAllMexcAssetInfo } from '@/services/api-service/api-service';
 import { NextResponse } from 'next/server';
 
 export async function GET(): Promise<any> {
   try {
-    const response = await fetch('https://api.mexc.com/api/v3/ticker/24hr');
-    const data = await response.json();
+    const response = await getAllMexcAssetInfo();
 
-    return NextResponse.json(data);
+    const usdtResponse = response.filter(asset => asset.symbol.includes('USDT'));
+
+    return NextResponse.json(usdtResponse);
   } catch (error: any) {
     return NextResponse.json({
       status: 400,

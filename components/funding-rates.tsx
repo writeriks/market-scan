@@ -14,11 +14,18 @@ import { TrendingUp, TrendingDown } from 'lucide-react';
 
 interface FundingRateProps {
   fundingRates: FundingRate[];
+  isLoading?: boolean;
 }
 
-const FundingRates: React.FC<FundingRateProps> = ({ fundingRates }) => {
+const FundingRates: React.FC<FundingRateProps> = ({ fundingRates, isLoading }) => {
   return (
-    <Card className='p-6'>
+    <Card className='p-6 relative'>
+      {/* Loading overlay */}
+      {isLoading && (
+        <div className='absolute inset-0 bg-black/50 flex items-center justify-center z-10'>
+          <div className='text-white  text-sm'>Loading...</div>
+        </div>
+      )}
       <div className='flex flex-col space-y-4'>
         <h2 className='text-2xl font-bold'>Funding Rates</h2>
         <Table>
@@ -50,7 +57,7 @@ const FundingRates: React.FC<FundingRateProps> = ({ fundingRates }) => {
                         <>
                           <TrendingUp className='w-4 h-4 text-green-500 mr-1' />
                           <span className='text-green-500 mr-1'>
-                            %{Number(fundingRate.percentageChange).toFixed(0)}
+                            {Number(fundingRate.percentageChange).toFixed(0)}%
                           </span>
                         </>
                       ) : (

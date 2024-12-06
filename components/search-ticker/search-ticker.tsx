@@ -20,17 +20,14 @@ const SearchTicker: React.FC<SearchTickerProps> = ({ setSymbol, symbol, allAsset
   }, [allAssets]);
 
   return (
-    <div>
+    <>
       <AutocompleteInput
         options={options}
         value={symbol}
         onChange={setSymbol}
         placeholder='Type to search ticker...'
       />
-      {symbol && (
-        <p className='mt-4'>You selected: {allAssets.find(f => f.symbol === symbol)?.symbol}</p>
-      )}
-    </div>
+    </>
   );
 };
 
