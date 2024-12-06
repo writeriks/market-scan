@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/lib/utils';
 import * as React from 'react';
 
 export interface AutoCompleteInputOption {
@@ -12,6 +13,7 @@ interface AutocompleteInputProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  className?: string;
 }
 
 const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
@@ -19,6 +21,7 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
   value,
   onChange,
   placeholder = 'Type to search...',
+  className,
 }) => {
   const [inputValue, setInputValue] = React.useState(value);
   const [filteredOptions, setFilteredOptions] = React.useState<AutoCompleteInputOption[]>([]);
@@ -103,7 +106,7 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
   };
 
   return (
-    <div className='relative w-full max-w-xs'>
+    <div className={cn('relative ', className)}>
       {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
       <input
         ref={inputRef}

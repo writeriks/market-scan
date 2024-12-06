@@ -9,6 +9,7 @@ import {
   fetchPriceForAsset,
   getFundingRateForAsset,
 } from '@/services/api-service/api-service';
+import AssetDetails from '@/components/asset-details/asset-details';
 
 const CryptoAnalyzer: React.FC = () => {
   const [symbol, setSymbol] = useState<string>('BTCUSDT');
@@ -28,17 +29,15 @@ const CryptoAnalyzer: React.FC = () => {
     queryFn: () => getFundingRateForAsset(symbol),
   });
 
-  /*     if (!allAssets || !assetPrice || !fundingRates) {
-    return null;
-  } */
-
   return (
     <div className='w-full flex-col'>
-      <div className='m-2'>
+      <div className='m-4'>
         <SearchTicker setSymbol={setSymbol} symbol={symbol} allAssets={allAssets ?? []} />
       </div>
       <div className='flex flex-col lg:flex-row'>
-        <div className='lg:w-1/2 p-4'>Coin Details Here</div>
+        <div className='lg:w-1/2 p-4'>
+          <AssetDetails symbol={symbol} />
+        </div>
         <div className='lg:w-1/2 p-4'>
           <FundingRates fundingRates={fundingRates ?? []} isLoading={isLoading} />
         </div>

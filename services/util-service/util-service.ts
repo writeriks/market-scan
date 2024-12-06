@@ -21,8 +21,12 @@ export function formatCurrency(value: number): string {
   return `$${formatLargeNumber(value)}`;
 }
 
-export function formatNumberDecimalPoints(number: number): string {
-  return number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+export function formatNumberDecimalPoints(
+  number: number,
+  minimumFractionDigits = 2,
+  maximumFractionDigits = 2
+): string {
+  return number.toLocaleString('en-US', { minimumFractionDigits, maximumFractionDigits });
 }
 
 export function calculatePercentageChange(current: number, previous: number): number {
@@ -31,4 +35,11 @@ export function calculatePercentageChange(current: number, previous: number): nu
   }
 
   return ((current - previous) / previous) * 100;
+}
+
+export function formatStringDateToHour(date: string): string {
+  return new Date(date).toLocaleString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+  });
 }

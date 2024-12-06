@@ -26,6 +26,7 @@ const SearchTicker: React.FC<SearchTickerProps> = ({ setSymbol, symbol, allAsset
         value={symbol}
         onChange={setSymbol}
         placeholder='Type to search ticker...'
+        className='sm:min-w-full md:max-w-sm'
       />
     </>
   );

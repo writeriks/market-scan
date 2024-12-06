@@ -27,7 +27,7 @@ const FundingRates: React.FC<FundingRateProps> = ({ fundingRates, isLoading }) =
         </div>
       )}
       <div className='flex flex-col space-y-4'>
-        <h2 className='text-2xl font-bold'>Funding Rates</h2>
+        <h2 className='text-xl font-bold'>Funding Rates</h2>
         <Table>
           <TableHeader>
             <TableRow>

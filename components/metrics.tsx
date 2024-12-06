@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import FearGreedIndexMeter from '@/components/fear-greed-index-meter';
 import { useQuery } from '@tanstack/react-query';
-import { fetchAllMetrics } from '@/services/api-service/api-service';
+import { fetchAllMetrics, fetchAssetDetails } from '@/services/api-service/api-service';
 import { MarketData, MetricNames } from '@/types/metrics-type';
 
 const Metrics: React.FC = () => {

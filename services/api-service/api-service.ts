@@ -1,4 +1,9 @@
-import { MexcAssetInfo, MexcAssetPrice } from '@/types/asset-type';
+import {
+  AssetDetail,
+  AssetDetailResponse,
+  MexcAssetInfo,
+  MexcAssetPrice,
+} from '@/types/asset-type';
 import { CoinMarketCapitalData } from '@/types/coin-marketcap-types';
 import { FearAndGreed } from '@/types/fear-and-greed';
 import { FundingRate } from '@/types/funding-rate-type';
@@ -32,6 +37,21 @@ export const fetchUrl = async (
     console.error('Error fetching data:', error);
     throw new Error('Failed to fetch metrics');
   }
+};
+
+export const getAssetDetails = async (symbol: string): Promise<AssetDetailResponse> => {
+  const headers = {
+    'X-CMC_PRO_API_KEY': process.env.NEXT_PUBLIC_COINMARKETCAP_API_KEY || '',
+  };
+  const url = `https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?symbol=${symbol.toUpperCase()}`;
+  const response = await fetchUrl(url, headers);
+  return response.json();
+};
+
+export const fetchAssetDetails = async (symbol: string): Promise<AssetDetail> => {
+  const url = `/api/get-asset-details?symbol=${symbol}`;
+  const response = await fetchUrl(url);
+  return response.json();
 };
 
 /**
