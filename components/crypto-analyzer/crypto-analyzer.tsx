@@ -4,11 +4,7 @@ import React, { useState } from 'react';
 import FundingRates from '@/components/funding-rates';
 import SearchTicker from '@/components/search-ticker/search-ticker';
 import { useQuery } from '@tanstack/react-query';
-import {
-  fetchAllAssetsPrices,
-  fetchPriceForAsset,
-  getFundingRateForAsset,
-} from '@/services/api-service/api-service';
+import { fetchAllAssetsPrices, getFundingRateForAsset } from '@/services/api-service/api-service';
 import AssetDetails from '@/components/asset-details/asset-details';
 
 const CryptoAnalyzer: React.FC = () => {
@@ -18,12 +14,6 @@ const CryptoAnalyzer: React.FC = () => {
     queryKey: ['fetch-all-assets'],
     queryFn: () => fetchAllAssetsPrices(),
   });
-
-  const { data: assetPrice } = useQuery({
-    queryKey: [`get-price-for-${symbol}`],
-    queryFn: () => fetchPriceForAsset(symbol),
-  });
-
   const { data: fundingRates, isLoading } = useQuery({
     queryKey: [`get-funding-rates-${symbol}`],
     queryFn: () => getFundingRateForAsset(symbol),
