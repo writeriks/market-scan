@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import FearGreedIndexMeter from '@/components/fear-greed-index-meter';
 import { useQuery } from '@tanstack/react-query';
-import { fetchAllMetrics, fetchAssetDetails } from '@/services/api-service/api-service';
+import { fetchAllMetrics } from '@/services/api-service/api-service';
 import { MarketData, MetricNames } from '@/types/metrics-type';
 
 const Metrics: React.FC = () => {
@@ -22,7 +22,6 @@ const Metrics: React.FC = () => {
     { name: MetricNames.TOTAL_MARKET_CAP, value: '0', change: 0, price: '0', volume: '000' },
     { name: MetricNames.ALTCOIN_MARKET_CAP, value: '0', change: 0, price: '0', volume: '000' },
   ];
-  /* if (!data) return null; */
 
   const renderMetrics = (metric: MarketData): any => {
     switch (metric.name) {

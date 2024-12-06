@@ -16,8 +16,8 @@ export async function GET(): Promise<any> {
     const btcPrice = await getAssetPrice('BTCUSDT');
     const btcInfo = await getMexcAssetInfo('BTCUSDT');
 
-    const ethPrice = await getAssetPrice('BTCUSDT');
-    const ethInfo = await getMexcAssetInfo('BTCUSDT');
+    const ethPrice = await getAssetPrice('ETHUSDT');
+    const ethInfo = await getMexcAssetInfo('ETHUSDT');
 
     const metrics = [
       {

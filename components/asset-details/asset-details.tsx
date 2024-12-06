@@ -227,7 +227,7 @@ const AssetDetails: React.FC<AssetDetailsProps> = ({ symbol }) => {
                     <span className='text-sm text-muted-foreground ml-2 flex'>Last Update</span>
                   </TableCell>
                   <TableCell>{formatStringDateToHour(assetDetails?.last_updated ?? '')}</TableCell>
-                </TableRow>{' '}
+                </TableRow>
               </>
             }
           </TableBody>
