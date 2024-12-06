@@ -26,7 +26,6 @@ const AssetDetails: React.FC<AssetDetailsProps> = ({ symbol }) => {
     queryKey: [`get-asset-details-${symbol}`],
     queryFn: () => fetchAssetDetails(symbol),
   });
-  console.log('🚀 ~ assetDetails:', assetDetails);
 
   return (
     <Card className='p-6 relative'>
