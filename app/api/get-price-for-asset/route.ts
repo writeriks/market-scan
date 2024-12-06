@@ -1,3 +1,4 @@
+import { getMexcAssetInfo } from '@/services/api-service/api-service';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest): Promise<any> {
@@ -5,11 +6,23 @@ export async function GET(request: NextRequest): Promise<any> {
     const { searchParams } = new URL(request.url);
     const symbol = searchParams.get('symbol') ?? '';
 
-    const response = await fetch(`https://api.mexc.com/api/v3/ticker/24hr?symbol=${symbol}USDT`);
-    const data = await response.json();
+    if (!symbol) {
+      return NextResponse.json({
+        status: 400,
+        statusText: JSON.stringify('Symbol not found'),
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      });
+    }
 
-    return NextResponse.json(data);
+    //    const response = await fetch(`https://api.mexc.com/api/v3/ticker/24hr?symbol=${symbol}USDT`);
+    const response = await getMexcAssetInfo(symbol);
+
+    return NextResponse.json(response);
   } catch (error: any) {
-    return NextResponse.error();
+    return NextResponse.json({
+      status: 400,
+      statusText: JSON.stringify(error),
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    });
   }
 }

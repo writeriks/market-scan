@@ -1,6 +1,6 @@
 import {
   fetchCoinbaseMarketData,
-  getAssetInfo,
+  getMexcAssetInfo,
   getAssetPrice,
   getFearAndGreedIndex,
 } from '@/services/api-service/api-service';
@@ -13,11 +13,11 @@ export async function GET(): Promise<any> {
     const fearAndGreedIndex = await getFearAndGreedIndex();
     const coinbaseData = await fetchCoinbaseMarketData();
 
-    const btcPrice = await getAssetPrice('btc');
-    const btcInfo = await getAssetInfo('btc');
+    const btcPrice = await getAssetPrice('BTCUSDT');
+    const btcInfo = await getMexcAssetInfo('BTCUSDT');
 
-    const ethPrice = await getAssetPrice('eth');
-    const ethInfo = await getAssetInfo('eth');
+    const ethPrice = await getAssetPrice('BTCUSDT');
+    const ethInfo = await getMexcAssetInfo('BTCUSDT');
 
     const metrics = [
       {

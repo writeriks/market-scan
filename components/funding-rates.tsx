@@ -9,21 +9,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { getFundingRateForAsset } from '@/services/api-service/api-service';
-import { useQuery } from '@tanstack/react-query';
+import { FundingRate } from '@/types/funding-rate-type';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 
 interface FundingRateProps {
-  symbol: string;
-  setSymbol: (symbol: string) => void;
+  fundingRates: FundingRate[];
 }
 
-const FundingRates: React.FC<FundingRateProps> = ({ symbol }) => {
-  const { data: fundingRates } = useQuery({
-    queryKey: ['get-funding-rates'],
-    queryFn: () => getFundingRateForAsset(symbol),
-  });
-
+const FundingRates: React.FC<FundingRateProps> = ({ fundingRates }) => {
   return (
     <Card className='p-6'>
       <div className='flex flex-col space-y-4'>
