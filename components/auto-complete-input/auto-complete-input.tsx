@@ -81,6 +81,13 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
     }
   };
 
+  const handleClear = (): void => {
+    setInputValue('');
+    setFilteredOptions([]);
+    setHighlightedIndex(-1);
+    inputRef.current?.focus();
+  };
+
   React.useEffect(() => {
     if (highlightedIndex !== -1 && optionsRef.current) {
       const highlightedElement = optionsRef.current.children[highlightedIndex] as HTMLElement;
@@ -120,6 +127,16 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
         aria-controls='autocomplete-options'
         aria-expanded={filteredOptions.length > 0}
       />
+      {inputValue && (
+        <button
+          type='button'
+          onClick={handleClear}
+          className='absolute inset-y-0 right-6 flex items-center text-gray-500 hover:text-gray-700 focus:outline-none'
+        >
+          ✕
+        </button>
+      )}
+
       {filteredOptions.length > 0 && (
         <ul
           id='autocomplete-options'
