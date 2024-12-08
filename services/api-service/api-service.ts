@@ -39,6 +39,17 @@ export const fetchUrl = async (
   }
 };
 
+/**
+ * Fetches the latest Fear and Greed Index.
+ * @returns A Promise resolving to the Fear and Greed Index data.
+ */
+export const getFearAndGreedIndex = async (): Promise<FearAndGreed> => {
+  const url = 'https://api.alternative.me/fng/';
+  const response = await fetchUrl(url);
+  const data = await response.json();
+  return data.data[0];
+};
+
 export const getAssetDetails = async (symbol: string): Promise<AssetDetailResponse> => {
   const headers = {
     'X-CMC_PRO_API_KEY': process.env.NEXT_PUBLIC_COINMARKETCAP_API_KEY || '',
@@ -88,17 +99,6 @@ export const getMexcAssetInfo = async (ticker: string): Promise<MexcAssetInfo> =
   const url = `https://api.mexc.com/api/v3/ticker/24hr?symbol=${ticker.toUpperCase()}`;
   const response = await fetchUrl(url);
   return response.json();
-};
-
-/**
- * Fetches the latest Fear and Greed Index.
- * @returns A Promise resolving to the Fear and Greed Index data.
- */
-export const getFearAndGreedIndex = async (): Promise<FearAndGreed> => {
-  const url = 'https://api.alternative.me/fng/?limit=1';
-  const response = await fetchUrl(url);
-  const data = await response.json();
-  return data.data[0];
 };
 
 /**
