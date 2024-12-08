@@ -7,8 +7,6 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchAllMetrics } from '@/services/api-service/api-service';
 import { MarketData, MetricNames } from '@/types/metrics-type';
 
-export const dynamic = 'force-dynamic';
-
 const Metrics: React.FC = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['get-all-metrics'],
