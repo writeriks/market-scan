@@ -8,6 +8,7 @@ import { CoinMarketCapitalData } from '@/types/coin-marketcap-types';
 import { FearAndGreed } from '@/types/fear-and-greed';
 import { FundingRate } from '@/types/funding-rate-type';
 import { MarketData } from '@/types/metrics-type';
+import { cache } from 'react';
 
 /**
  * Utility function to fetch data from a given URL.
@@ -22,12 +23,13 @@ export const fetchUrl = async (
   payload?: Record<string, any>
 ): Promise<Response> => {
   try {
-    const options = {
+    const options: RequestInit = {
       method: payload ? 'POST' : 'GET',
       headers: {
         ...headers,
       },
       body: payload ? JSON.stringify(payload) : undefined,
+      cache: 'no-store',
     };
 
     const response = await fetch(url, options);
