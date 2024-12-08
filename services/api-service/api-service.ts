@@ -8,6 +8,7 @@ import { CoinMarketCapitalData } from '@/types/coin-marketcap-types';
 import { FearAndGreed } from '@/types/fear-and-greed';
 import { FundingRate } from '@/types/funding-rate-type';
 import { MarketData } from '@/types/metrics-type';
+import { cache } from 'react';
 
 /**
  * Utility function to fetch data from a given URL.
@@ -22,12 +23,13 @@ export const fetchUrl = async (
   payload?: Record<string, any>
 ): Promise<Response> => {
   try {
-    const options = {
+    const options: RequestInit = {
       method: payload ? 'POST' : 'GET',
       headers: {
         ...headers,
       },
       body: payload ? JSON.stringify(payload) : undefined,
+      cache: 'no-store',
     };
 
     const response = await fetch(url, options);
@@ -37,6 +39,17 @@ export const fetchUrl = async (
     console.error('Error fetching data:', error);
     throw new Error('Failed to fetch metrics');
   }
+};
+
+/**
+ * Fetches the latest Fear and Greed Index.
+ * @returns A Promise resolving to the Fear and Greed Index data.
+ */
+export const getFearAndGreedIndex = async (): Promise<FearAndGreed> => {
+  const url = 'https://api.alternative.me/fng/';
+  const response = await fetchUrl(url);
+  const data = await response.json();
+  return data.data[0];
 };
 
 export const getAssetDetails = async (symbol: string): Promise<AssetDetailResponse> => {
@@ -88,17 +101,6 @@ export const getMexcAssetInfo = async (ticker: string): Promise<MexcAssetInfo> =
   const url = `https://api.mexc.com/api/v3/ticker/24hr?symbol=${ticker.toUpperCase()}`;
   const response = await fetchUrl(url);
   return response.json();
-};
-
-/**
- * Fetches the latest Fear and Greed Index.
- * @returns A Promise resolving to the Fear and Greed Index data.
- */
-export const getFearAndGreedIndex = async (): Promise<FearAndGreed> => {
-  const url = 'https://api.alternative.me/fng/?limit=1';
-  const response = await fetchUrl(url);
-  const data = await response.json();
-  return data.data[0];
 };
 
 /**
