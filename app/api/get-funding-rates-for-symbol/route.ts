@@ -23,6 +23,14 @@ export async function GET(request: NextRequest): Promise<any> {
     const bybitFundingRateResponse: BybitFundingRateResponse = await bybitResponse.json();
     const bybitFundingRates = bybitFundingRateResponse.result.list;
 
+    // Convert funding rates to percentage
+    binanceFundingRateResponse.forEach(fundingRate => {
+      fundingRate.fundingRate = (Number(fundingRate.fundingRate) * 100).toString();
+    });
+    bybitFundingRates.forEach(fundingRate => {
+      fundingRate.fundingRate = (Number(fundingRate.fundingRate) * 100).toString();
+    });
+
     let binanceFundingRate: FundingRate = {
       exchange: 'Binance',
       symbol: '',
