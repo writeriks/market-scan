@@ -8,7 +8,6 @@ import { CoinMarketCapitalData } from '@/types/coin-marketcap-types';
 import { FearAndGreed } from '@/types/fear-and-greed';
 import { FundingRate } from '@/types/funding-rate-type';
 import { MarketData } from '@/types/metrics-type';
-import { cache } from 'react';
 
 /**
  * Utility function to fetch data from a given URL.
